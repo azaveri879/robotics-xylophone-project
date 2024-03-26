@@ -1,3 +1,6 @@
+import librosa
+import numpy as np
+
 """
 Function to decide which mallet to use for each key in the song.
 Input: 
@@ -12,7 +15,7 @@ def mallet_decision(notes, distance_map):
         return []
 
     # Initialize mallet positions to the first note (or the first two different notes if available)
-    left_mallet = right_mallet = notes[0]
+    left_mallet = right_mallet = notes[0] # These should be different notes
     if len(notes) > 1 and notes[0] != notes[1]:
         right_mallet = notes[1]
 
@@ -36,38 +39,39 @@ def mallet_decision(notes, distance_map):
 
         decisions.append((left_mallet, right_mallet))
 
+    # (left_note, right_note)
     return decisions
 
-#    # Initialize memoization table, potentially with -1 or None to indicate uncomputed states
-#     memo = {}
-#     n = len(notes)
-    
-#     def dp(i, pos_left, pos_right):
-#         # Base case: If all notes have been considered, return 0 (no movement needed)
-#         if i == n:
-#             return 0
-#         # Check if the current state has been computed before
-#         if (i, pos_left, pos_right) in memo:
-#             return memo[(i, pos_left, pos_right)]
-        
-#         # Calculate the cost of playing the next note with the left mallet
-#         cost_left = distance_map[(pos_left, notes[i])] + dp(i + 1, notes[i], pos_right)
-#         # Calculate the cost of playing the next note with the right mallet
-#         cost_right = distance_map[(pos_right, notes[i])] + dp(i + 1, pos_left, notes[i])
-        
-#         # Choose the option with the minimum cost
-#         memo[(i, pos_left, pos_right)] = min(cost_left, cost_right)
-        
-#         return memo[(i, pos_left, pos_right)]
-    
-#     # Initialize starting positions of mallets, for example, assuming they start at the first note
-#     start_pos_left = notes[0]  # or some other logic to determine the starting position
-#     start_pos_right = notes[0]  # Adjust as necessary
-#     dp(0, start_pos_left, start_pos_right)
-    
-#     # Reconstruct the decision path from the memoization table
-#     # This part requires additional logic to backtrack through your memoization
-#     # table and determine the sequence of decisions (left or right mallet) that led to the minimum cost.
+def freq_to_note(freq):
+    """Map a frequency to a musical note."""
+    A4 = 440
+    C0 = A4*np.power(2, -4.75)
+    if freq == 0: return None  # Silence or unvoiced
+    h = round(12*np.log2(freq/C0))
+    octave = h // 12
+    n = h % 12
+    note = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'][n] + str(octave)
+    return note
 
+def detect_notes(audio_path):
+    y, sr = librosa.load(audio_path)
+    pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
+    # Taking the maximum magnitude pitch for each time frame
+    pitch_times = np.argmax(magnitudes, axis=0)
+    pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]
     
-#     return []  # Return the reconstructed decision path
+    # Filtering out low amplitudes
+    pitch_freqs_filtered = [freq if magnitudes[pitch_times[i], i] > np.median(magnitudes) else 0 for i, freq in enumerate(pitch_freqs)]
+    
+    notes = [freq_to_note(freq) for freq in pitch_freqs_filtered]
+
+    # Simplify: Collapsing consecutive identical notes
+    simplified_notes = [notes[0]]
+    for note in notes[1:]:
+        if note != simplified_notes[-1]:
+            simplified_notes.append(note)
+    
+    # Note durations/timing is simplified in this example
+    # More sophisticated analysis would be required for accurate timing
+    return simplified_notes
+
