@@ -1,0 +1,66 @@
+[0.373s] Invoking command in '/home/carson/interbotix_ws/build/interbotix_common_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake /home/carson/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_common_sim -DCMAKE_INSTALL_PREFIX=/home/carson/interbotix_ws/install/interbotix_common_sim
+[0.901s] -- The C compiler identification is GNU 9.4.0
+[2.089s] -- The CXX compiler identification is GNU 9.4.0
+[3.018s] -- Check for working C compiler: /usr/bin/cc
+[3.499s] -- Check for working C compiler: /usr/bin/cc -- works
+[3.500s] -- Detecting C compiler ABI info
+[3.962s] -- Detecting C compiler ABI info - done
+[3.978s] -- Detecting C compile features
+[3.978s] -- Detecting C compile features - done
+[3.981s] -- Check for working CXX compiler: /usr/bin/c++
+[4.399s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[4.402s] -- Detecting CXX compiler ABI info
+[5.123s] -- Detecting CXX compiler ABI info - done
+[5.146s] -- Detecting CXX compile features
+[5.147s] -- Detecting CXX compile features - done
+[5.152s] -- Found ament_cmake: 1.1.6 (/opt/ros/galactic/share/ament_cmake/cmake)
+[5.189s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[5.189s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[5.310s] -- Found ament_lint_auto: 0.10.7 (/opt/ros/galactic/share/ament_lint_auto/cmake)
+[5.397s] -- Configuring done
+[5.400s] -- Generating done
+[5.401s] -- Build files have been written to: /home/carson/interbotix_ws/build/interbotix_common_sim
+[5.406s] Invoked command in '/home/carson/interbotix_ws/build/interbotix_common_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake /home/carson/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_common_sim -DCMAKE_INSTALL_PREFIX=/home/carson/interbotix_ws/install/interbotix_common_sim
+[5.411s] Invoking command in '/home/carson/interbotix_ws/build/interbotix_common_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --build /home/carson/interbotix_ws/build/interbotix_common_sim -- -j16 -l16
+[5.475s] Invoked command in '/home/carson/interbotix_ws/build/interbotix_common_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --build /home/carson/interbotix_ws/build/interbotix_common_sim -- -j16 -l16
+[5.522s] Invoking command in '/home/carson/interbotix_ws/build/interbotix_common_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --install /home/carson/interbotix_ws/build/interbotix_common_sim
+[5.536s] -- Install configuration: ""
+[5.536s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models
+[5.537s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/TrossenRoboticsOfficeBuilding
+[5.537s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/TrossenRoboticsOfficeBuilding/model.config
+[5.538s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/TrossenRoboticsOfficeBuilding/TrossenRoboticsOfficeBuilding.sdf
+[5.538s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/RealSenseD415
+[5.538s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/RealSenseD415/camera.stl
+[5.538s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/RealSenseD415/model.config
+[5.538s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/RealSenseD415/RealSenseD415.sdf
+[5.539s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/VisionKit
+[5.539s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/VisionKit/model.config
+[5.539s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/VisionKit/VisionKit.sdf
+[5.540s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/models/VisionKit/stand.stl
+[5.540s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/worlds
+[5.540s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/worlds/vision_kit.world
+[5.540s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/worlds/interbotix.world
+[5.541s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media
+[5.541s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/interbotix_black.png
+[5.541s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/materials
+[5.542s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/materials/scripts
+[5.542s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/materials/scripts/interbotix_texture.gazebo
+[5.542s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/materials/scripts/interbotix_black.material
+[5.543s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/materials/textures
+[5.543s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/media/materials/textures/interbotix_black.png
+[5.543s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/ament_index/resource_index/package_run_dependencies/interbotix_common_sim
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/ament_index/resource_index/parent_prefix_path/interbotix_common_sim
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/environment/ament_prefix_path.sh
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/environment/ament_prefix_path.dsv
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/environment/path.sh
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/environment/path.dsv
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/local_setup.bash
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/local_setup.sh
+[5.544s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/local_setup.zsh
+[5.545s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/local_setup.dsv
+[5.545s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/package.dsv
+[5.545s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/ament_index/resource_index/packages/interbotix_common_sim
+[5.545s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/cmake/interbotix_common_simConfig.cmake
+[5.546s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/cmake/interbotix_common_simConfig-version.cmake
+[5.546s] -- Installing: /home/carson/interbotix_ws/install/interbotix_common_sim/share/interbotix_common_sim/package.xml
+[5.549s] Invoked command in '/home/carson/interbotix_ws/build/interbotix_common_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --install /home/carson/interbotix_ws/build/interbotix_common_sim

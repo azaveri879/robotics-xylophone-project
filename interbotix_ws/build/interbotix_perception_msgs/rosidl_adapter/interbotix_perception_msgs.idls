@@ -1,0 +1,4 @@
+/home/carson/interbotix_ws/build/interbotix_perception_msgs/rosidl_adapter/interbotix_perception_msgs:msg/ClusterInfo.idl
+/home/carson/interbotix_ws/build/interbotix_perception_msgs/rosidl_adapter/interbotix_perception_msgs:srv/ClusterInfoArray.idl
+/home/carson/interbotix_ws/build/interbotix_perception_msgs/rosidl_adapter/interbotix_perception_msgs:srv/FilterParams.idl
+/home/carson/interbotix_ws/build/interbotix_perception_msgs/rosidl_adapter/interbotix_perception_msgs:srv/SnapPicture.idl

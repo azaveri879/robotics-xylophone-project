@@ -1,0 +1,14 @@
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/ArmJoy.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/HexJoy.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/JointGroupCommand.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/JointSingleCommand.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/JointTemps.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/JointTrajectoryCommand.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/LocobotJoy.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:msg/TurretJoy.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:srv/MotorGains.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:srv/OperatingModes.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:srv/Reboot.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:srv/RegisterValues.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:srv/RobotInfo.idl
+/home/carson/interbotix_ws/build/interbotix_xs_msgs/rosidl_adapter/interbotix_xs_msgs:srv/TorqueEnable.idl

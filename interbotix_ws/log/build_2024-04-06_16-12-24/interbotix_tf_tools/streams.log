@@ -1,0 +1,90 @@
+[0.370s] Invoking command in '/home/carson/interbotix_ws/build/interbotix_tf_tools': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake /home/carson/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_tf_tools -DCMAKE_INSTALL_PREFIX=/home/carson/interbotix_ws/install/interbotix_tf_tools
+[1.113s] -- The C compiler identification is GNU 9.4.0
+[2.402s] -- The CXX compiler identification is GNU 9.4.0
+[3.428s] -- Check for working C compiler: /usr/bin/cc
+[3.866s] -- Check for working C compiler: /usr/bin/cc -- works
+[3.867s] -- Detecting C compiler ABI info
+[4.169s] -- Detecting C compiler ABI info - done
+[4.189s] -- Detecting C compile features
+[4.190s] -- Detecting C compile features - done
+[4.193s] -- Check for working CXX compiler: /usr/bin/c++
+[4.957s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[4.960s] -- Detecting CXX compiler ABI info
+[5.567s] -- Detecting CXX compiler ABI info - done
+[5.585s] -- Detecting CXX compile features
+[5.586s] -- Detecting CXX compile features - done
+[5.587s] -- Found ament_cmake: 1.1.6 (/opt/ros/galactic/share/ament_cmake/cmake)
+[5.622s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[5.622s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[5.733s] -- Found geometry_msgs: 2.2.4 (/opt/ros/galactic/share/geometry_msgs/cmake)
+[6.480s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[6.492s] -- Found rosidl_adapter: 2.2.3 (/opt/ros/galactic/share/rosidl_adapter/cmake)
+[10.002s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[13.874s] -- Found FastRTPS: /opt/ros/galactic/include  
+[19.845s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[19.972s] -- Found rclcpp: 9.2.2 (/opt/ros/galactic/share/rclcpp/cmake)
+[20.073s] -- Found rmw_implementation_cmake: 3.3.1 (/opt/ros/galactic/share/rmw_implementation_cmake/cmake)
+[20.085s] -- Found rmw_cyclonedds_cpp: 0.22.6 (/opt/ros/galactic/share/rmw_cyclonedds_cpp/cmake)
+[20.128s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[20.131s] -- Looking for pthread.h
+[20.586s] -- Looking for pthread.h - found
+[20.586s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[20.947s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[20.947s] -- Looking for pthread_create in pthreads
+[21.750s] -- Looking for pthread_create in pthreads - not found
+[21.751s] -- Looking for pthread_create in pthread
+[23.004s] -- Looking for pthread_create in pthread - found
+[23.008s] -- Found Threads: TRUE  
+[23.608s] -- Found rclcpp_components: 9.2.2 (/opt/ros/galactic/share/rclcpp_components/cmake)
+[23.809s] -- Found tf2_msgs: 0.17.5 (/opt/ros/galactic/share/tf2_msgs/cmake)
+[24.835s] -- Found tf2_ros: 0.17.5 (/opt/ros/galactic/share/tf2_ros/cmake)
+[25.030s] -- Found ament_lint_auto: 0.10.7 (/opt/ros/galactic/share/ament_lint_auto/cmake)
+[25.140s] -- Added test 'copyright' to check source files copyright and LICENSE
+[25.143s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[25.144s] -- Configured cppcheck include dirs: /home/carson/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_tf_tools/include
+[25.144s] -- Configured cppcheck exclude dirs and/or files: 
+[25.146s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[25.146s] -- Configured cpplint exclude dirs and/or files: 
+[25.148s] -- Added test 'flake8' to check Python code syntax and style conventions
+[25.150s] -- Added test 'lint_cmake' to check CMake code style
+[25.152s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[25.154s] -- Added test 'uncrustify' to check C / C++ code style
+[25.154s] -- Configured uncrustify additional arguments: 
+[25.156s] -- Added test 'xmllint' to check XML markup files
+[25.161s] -- Configuring done
+[25.178s] -- Generating done
+[25.180s] -- Build files have been written to: /home/carson/interbotix_ws/build/interbotix_tf_tools
+[25.195s] Invoked command in '/home/carson/interbotix_ws/build/interbotix_tf_tools' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake /home/carson/interbotix_ws/src/interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_tf_tools -DCMAKE_INSTALL_PREFIX=/home/carson/interbotix_ws/install/interbotix_tf_tools
+[25.196s] Invoking command in '/home/carson/interbotix_ws/build/interbotix_tf_tools': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --build /home/carson/interbotix_ws/build/interbotix_tf_tools -- -j16 -l16
+[25.254s] [35m[1mScanning dependencies of target tf_rebroadcaster[0m
+[25.545s] [ 50%] [32mBuilding CXX object CMakeFiles/tf_rebroadcaster.dir/src/tf_rebroadcaster.cpp.o[0m
+[37.619s] [100%] [32m[1mLinking CXX shared library libtf_rebroadcaster.so[0m
+[38.647s] [100%] Built target tf_rebroadcaster
+[38.661s] Invoked command in '/home/carson/interbotix_ws/build/interbotix_tf_tools' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --build /home/carson/interbotix_ws/build/interbotix_tf_tools -- -j16 -l16
+[38.706s] Invoking command in '/home/carson/interbotix_ws/build/interbotix_tf_tools': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --install /home/carson/interbotix_ws/build/interbotix_tf_tools
+[38.715s] -- Install configuration: ""
+[38.715s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/lib/libtf_rebroadcaster.so
+[38.721s] -- Set runtime path of "/home/carson/interbotix_ws/install/interbotix_tf_tools/lib/libtf_rebroadcaster.so" to ""
+[38.721s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/lib/interbotix_tf_tools/static_trans_pub.py
+[38.722s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools//config
+[38.722s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools//config/tf_rebroadcaster.yaml
+[38.722s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools//launch
+[38.723s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools//launch/tf_rebroadcaster.launch.py
+[38.723s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools//launch/static_transform_pub.launch.py
+[38.723s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/ament_index/resource_index/package_run_dependencies/interbotix_tf_tools
+[38.724s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/ament_index/resource_index/parent_prefix_path/interbotix_tf_tools
+[38.725s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/environment/ament_prefix_path.sh
+[38.725s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/environment/ament_prefix_path.dsv
+[38.725s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/environment/path.sh
+[38.726s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/environment/path.dsv
+[38.726s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/local_setup.bash
+[38.726s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/local_setup.sh
+[38.726s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/local_setup.zsh
+[38.727s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/local_setup.dsv
+[38.727s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/package.dsv
+[38.727s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/ament_index/resource_index/packages/interbotix_tf_tools
+[38.728s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/ament_index/resource_index/rclcpp_components/interbotix_tf_tools
+[38.729s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/cmake/interbotix_tf_toolsConfig.cmake
+[38.729s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/cmake/interbotix_tf_toolsConfig-version.cmake
+[38.730s] -- Installing: /home/carson/interbotix_ws/install/interbotix_tf_tools/share/interbotix_tf_tools/package.xml
+[38.732s] Invoked command in '/home/carson/interbotix_ws/build/interbotix_tf_tools' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --install /home/carson/interbotix_ws/build/interbotix_tf_tools

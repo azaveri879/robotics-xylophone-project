@@ -1,0 +1,89 @@
+[0.376s] Invoking command in '/home/carson/interbotix_ws/build/dynamixel_workbench_toolbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake /home/carson/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox -DCMAKE_INSTALL_PREFIX=/home/carson/interbotix_ws/install/dynamixel_workbench_toolbox
+[1.089s] -- The C compiler identification is GNU 9.4.0
+[2.241s] -- The CXX compiler identification is GNU 9.4.0
+[3.227s] -- Check for working C compiler: /usr/bin/cc
+[3.658s] -- Check for working C compiler: /usr/bin/cc -- works
+[3.659s] -- Detecting C compiler ABI info
+[3.988s] -- Detecting C compiler ABI info - done
+[4.004s] -- Detecting C compile features
+[4.004s] -- Detecting C compile features - done
+[4.007s] -- Check for working CXX compiler: /usr/bin/c++
+[4.534s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[4.538s] -- Detecting CXX compiler ABI info
+[5.267s] -- Detecting CXX compiler ABI info - done
+[5.283s] -- Detecting CXX compile features
+[5.284s] -- Detecting CXX compile features - done
+[5.287s] -- Found ament_cmake: 1.1.6 (/opt/ros/galactic/share/ament_cmake/cmake)
+[5.326s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[5.326s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[5.435s] -- Found dynamixel_sdk: 3.7.40 (/opt/ros/galactic/share/dynamixel_sdk/cmake)
+[5.442s] -- Found rclcpp: 9.2.2 (/opt/ros/galactic/share/rclcpp/cmake)
+[6.161s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[6.173s] -- Found rosidl_adapter: 2.2.3 (/opt/ros/galactic/share/rosidl_adapter/cmake)
+[10.052s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+[15.778s] -- Found FastRTPS: /opt/ros/galactic/include  
+[24.678s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[24.774s] -- Found rmw_implementation_cmake: 3.3.1 (/opt/ros/galactic/share/rmw_implementation_cmake/cmake)
+[24.783s] -- Found rmw_cyclonedds_cpp: 0.22.6 (/opt/ros/galactic/share/rmw_cyclonedds_cpp/cmake)
+[24.821s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[24.822s] -- Looking for pthread.h
+[25.347s] -- Looking for pthread.h - found
+[25.347s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[25.723s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+[25.723s] -- Looking for pthread_create in pthreads
+[26.055s] -- Looking for pthread_create in pthreads - not found
+[26.055s] -- Looking for pthread_create in pthread
+[26.471s] -- Looking for pthread_create in pthread - found
+[26.473s] -- Found Threads: TRUE  
+[26.860s] -- Configuring done
+[26.873s] -- Generating done
+[26.875s] -- Build files have been written to: /home/carson/interbotix_ws/build/dynamixel_workbench_toolbox
+[26.883s] Invoked command in '/home/carson/interbotix_ws/build/dynamixel_workbench_toolbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake /home/carson/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox -DCMAKE_INSTALL_PREFIX=/home/carson/interbotix_ws/install/dynamixel_workbench_toolbox
+[26.887s] Invoking command in '/home/carson/interbotix_ws/build/dynamixel_workbench_toolbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --build /home/carson/interbotix_ws/build/dynamixel_workbench_toolbox -- -j16 -l16
+[26.958s] [35m[1mScanning dependencies of target dynamixel_workbench_toolbox[0m
+[26.980s] [ 20%] [32mBuilding CXX object CMakeFiles/dynamixel_workbench_toolbox.dir/src/dynamixel_workbench_toolbox/dynamixel_workbench.cpp.o[0m
+[26.980s] [ 40%] [32mBuilding CXX object CMakeFiles/dynamixel_workbench_toolbox.dir/src/dynamixel_workbench_toolbox/dynamixel_item.cpp.o[0m
+[26.981s] [ 60%] [32mBuilding CXX object CMakeFiles/dynamixel_workbench_toolbox.dir/src/dynamixel_workbench_toolbox/dynamixel_driver.cpp.o[0m
+[26.983s] [ 80%] [32mBuilding CXX object CMakeFiles/dynamixel_workbench_toolbox.dir/src/dynamixel_workbench_toolbox/dynamixel_tool.cpp.o[0m
+[27.405s] [01m[K/home/carson/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox/src/dynamixel_workbench_toolbox/dynamixel_driver.cpp:[m[K In member function ‘[01m[Kbool DynamixelDriver::readRegister(uint8_t, uint16_t, uint16_t, uint32_t*, const char**)[m[K’:
+[27.405s] [01m[K/home/carson/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox/src/dynamixel_workbench_toolbox/dynamixel_driver.cpp:776:11:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array ‘[01m[Kdata_read[m[K’ [[01;35m[K-Wvla[m[K]
+[27.405s]   776 |   uint8_t [01;35m[Kdata_read[m[K[length];
+[27.405s]       |           [01;35m[K^~~~~~~~~[m[K
+[27.409s] [01m[K/home/carson/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox/src/dynamixel_workbench_toolbox/dynamixel_driver.cpp:[m[K In member function ‘[01m[Kbool DynamixelDriver::syncWrite(uint8_t, uint8_t*, uint8_t, int32_t*, uint8_t, const char**)[m[K’:
+[27.409s] [01m[K/home/carson/interbotix_ws/src/interbotix_ros_core/interbotix_ros_xseries/dynamixel_workbench_toolbox/src/dynamixel_workbench_toolbox/dynamixel_driver.cpp:1012:11:[m[K [01;35m[Kwarning: [m[KISO C++ forbids variable length array ‘[01m[Kmulti_parameter[m[K’ [[01;35m[K-Wvla[m[K]
+[27.409s]  1012 |   uint8_t [01;35m[Kmulti_parameter[m[K[4*data_num_for_each_id];
+[27.409s]       |           [01;35m[K^~~~~~~~~~~~~~~[m[K
+[27.715s] [100%] [32m[1mLinking CXX shared library libdynamixel_workbench_toolbox.so[0m
+[28.330s] [100%] Built target dynamixel_workbench_toolbox
+[28.346s] Invoked command in '/home/carson/interbotix_ws/build/dynamixel_workbench_toolbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --build /home/carson/interbotix_ws/build/dynamixel_workbench_toolbox -- -j16 -l16
+[28.397s] Invoking command in '/home/carson/interbotix_ws/build/dynamixel_workbench_toolbox': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --install /home/carson/interbotix_ws/build/dynamixel_workbench_toolbox
+[28.430s] -- Install configuration: ""
+[28.432s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/lib/libdynamixel_workbench_toolbox.so
+[28.434s] -- Set runtime path of "/home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/lib/libdynamixel_workbench_toolbox.so" to ""
+[28.434s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/include/
+[28.435s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/include//dynamixel_workbench_toolbox
+[28.435s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/include//dynamixel_workbench_toolbox/dynamixel_tool.h
+[28.436s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/include//dynamixel_workbench_toolbox/dynamixel_item.h
+[28.436s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/include//dynamixel_workbench_toolbox/dynamixel_driver.h
+[28.436s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/include//dynamixel_workbench_toolbox/dynamixel_workbench.h
+[28.438s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/environment/library_path.sh
+[28.438s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/environment/library_path.dsv
+[28.440s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/ament_index/resource_index/package_run_dependencies/dynamixel_workbench_toolbox
+[28.441s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/ament_index/resource_index/parent_prefix_path/dynamixel_workbench_toolbox
+[28.441s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/environment/ament_prefix_path.sh
+[28.442s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/environment/ament_prefix_path.dsv
+[28.442s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/environment/path.sh
+[28.443s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/environment/path.dsv
+[28.444s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/local_setup.bash
+[28.444s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/local_setup.sh
+[28.445s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/local_setup.zsh
+[28.445s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/local_setup.dsv
+[28.446s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/package.dsv
+[28.447s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/ament_index/resource_index/packages/dynamixel_workbench_toolbox
+[28.447s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/cmake/ament_cmake_export_include_directories-extras.cmake
+[28.448s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/cmake/ament_cmake_export_dependencies-extras.cmake
+[28.448s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/cmake/ament_cmake_export_libraries-extras.cmake
+[28.449s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/cmake/dynamixel_workbench_toolboxConfig.cmake
+[28.449s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/cmake/dynamixel_workbench_toolboxConfig-version.cmake
+[28.450s] -- Installing: /home/carson/interbotix_ws/install/dynamixel_workbench_toolbox/share/dynamixel_workbench_toolbox/package.xml
+[28.455s] Invoked command in '/home/carson/interbotix_ws/build/dynamixel_workbench_toolbox' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_xs_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_perception_modules:/home/carson/robotics-xylophone-project/interbotix_ws/install/interbotix_common_modules:/home/carson/interbotix_ws/install/interbotix_xs_modules:/home/carson/interbotix_ws/install/interbotix_perception_modules:/home/carson/interbotix_ws/install/interbotix_common_modules:/opt/ros/galactic /usr/bin/cmake --install /home/carson/interbotix_ws/build/dynamixel_workbench_toolbox
