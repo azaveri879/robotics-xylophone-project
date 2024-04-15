@@ -4,34 +4,85 @@ from utils import freq_to_note
 import numpy as np
 
 class XylophonePlayer:
-    """Initialize a XylophonePlayer object with empty notes and a Q-table for learning."""
     def __init__(self):
+        """
+        Initialize the Xylophone Player class with default settings for note lists,
+        mallet positions, the Q-table for learning, and the current song.
+        """
         self.notes = []  # List to store the xylophone notes
+        self.right_mallet = None  # Current position of the right mallet
+        self.left_mallet = None  # Current position of the left mallet
         self.setup_notes()  # Setup the notes and their distances
         self.q_table = {}  # Q-table for learning the optimal actions
         self.current_song = []  # Current song (sequence of notes) to be played
 
     def setup_notes(self):
         """
-        Setup the xylophone notes and the distance between each pair of notes.
-        This information is used for decision-making in the mallet_decision function.
+        Setup the initial notes on the xylophone and initialize the mallet positions.
+        This function defines the distances between all pairs of notes to facilitate quick lookup during play.
         """
-        front_notes = ['G1', 'A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G2', 'A2', 'B2', 'C2', 'D2', 'E2', 'F2', 'G3']
+        front_notes = ['G1', 'G#1', 'A1', 'A#1', 'B1', 'C1', 'C#1', 'D1', 'D#1', 'E1', 'F1', 'G2', 'G#2', 'A2', 'A#2', 'B2', 'C2', 'C#2', 'D2', 'D#2', 'E2', 'F2', 'F#2', 'G3']
         note_map = {}
         for i in range(len(front_notes)):
             for j in range(len(front_notes)):
                 note_map[(front_notes[i], front_notes[j])] = abs(i - j)
-        self.distance_map = note_map  # Map of note pairs to distances
+        self.distance_map = note_map
+        self.notes = front_notes
+        self.right_mallet = self.notes[len(front_notes) // 2]  # Initialize the right mallet position
+        self.left_mallet = self.notes[(len(front_notes) // 2) - 1]  # Initialize the left mallet position
+        print("Initial Mallet Positions -> Left: {}, Right: {}".format(self.left_mallet, self.right_mallet))
+
+    def detect_notes(self, audio_path):
+        """
+        Detect the musical notes from an audio file using pitch tracking.
+        This function simplifies the detected notes to ensure consecutive identical notes are collapsed into one.
+        
+        Parameters:
+        - audio_path: Path to the audio file.
+        
+        Returns:
+        - simplified_notes: List of detected notes, simplified.
+        """
+        y, sr = librosa.load(audio_path)  # Load the audio file as a waveform `y` with a sampling rate `sr`
+        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)  # Extract pitches and their magnitudes
+        pitch_times = np.argmax(magnitudes, axis=0)  # Time indices of the prominent pitches
+        pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]  # Frequencies of prominent pitches
+
+        # Filter out frequencies below a threshold magnitude
+        pitch_freqs_filtered = [freq if magnitudes[pitch_times[i], i] > np.median(magnitudes) else 0 for i, freq in enumerate(pitch_freqs)]
+        notes = [freq_to_note(freq) for freq in pitch_freqs_filtered if freq > 0]  # Convert frequencies to note names
+
+        # Simplify the list of notes by collapsing consecutive duplicates
+        simplified_notes = [notes[0]]
+        for note in notes[1:]:
+            if note != simplified_notes[-1]:
+                simplified_notes.append(note)
+        
+        return simplified_notes
+
+    def set_song(self, song):
+        """
+        Set the current song for the xylophone player. 
+        This function also initializes Q-values for the notes in the new song.
+        
+        Parameters:
+        - song: A list of notes representing the song to be learned/played.
+        """
+        self.current_song = song
+        for note in song:
+            if note not in self.q_table:
+                self.q_table[note] = {'L': 0, 'R': 0}
 
     def mallet_decision(self, notes):
         """
-        Decide which mallet (left or right) to use for each key in the song.
-        The decision is based on minimizing the distance the mallets need to move.
+        Decide which mallet (left or right) to use for each note in the song based on the current positions of the mallets.
+        The decision aims to minimize the total movement distance of the mallets over the song.
         
-        Input: 
+        Parameters:
         - notes: List of notes to be played.
-        Output: 
-        - decisions: List of tuples indicating the mallet decisions for each note.
+        
+        Returns:
+        - decisions: List of tuples (note, left mallet position, right mallet position, chosen mallet).
         """
         if not notes:
             return []
@@ -55,144 +106,111 @@ class XylophonePlayer:
                 right_mallet = note
                 mallet_used = 'R'
 
-            decisions.append((left_mallet, right_mallet, mallet_used))
+            decisions.append((note, left_mallet, right_mallet, mallet_used))
 
         return decisions
+    def learn_to_play(self, episodes=1000):
+        """
+        Learn to play the current song optimally using Q-learning. Adjust the exploration rate over time to balance exploration and exploitation.
+        
+        Parameters:
+        - episodes: Number of episodes to run the learning process.
+        """
+        epsilon = 0.9  # Initial exploration rate
+        min_epsilon = 0.1  # Minimum exploration rate
+        epsilon_decay = 0.995  # Decay rate of exploration per episode
 
-    def detect_notes(self, audio_path):
-        """
-        Detect the musical notes from an audio file using pitch tracking.
-        This function simplifies the detected notes to ensure consecutive identical notes are collapsed into one.
-        
-        Input: 
-        - audio_path: Path to the audio file.
-        Output: 
-        - simplified_notes: List of detected notes, simplified.
-        """
-        y, sr = librosa.load(audio_path)
-        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
-        pitch_times = np.argmax(magnitudes, axis=0)
-        pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]
-
-        pitch_freqs_filtered = [freq if magnitudes[pitch_times[i], i] > np.median(magnitudes) else 0 for i, freq in enumerate(pitch_freqs)]
-        notes = [freq_to_note(freq) for freq in pitch_freqs_filtered]
-
-        simplified_notes = [notes[0]]
-        for note in notes[1:]:
-            if note != simplified_notes[-1]:
-                simplified_notes.append(note)
-        
-        return simplified_notes
-    
-    def learn_to_play(self, episodes=100, learning_rate=0.1, discount_rate=0.95, exploration_rate=1.0, exploration_decay=0.99, min_exploration_rate=0.01):
-        """
-        Learn to play the xylophone using a reinforcement learning algorithm.
-        This function iterates over episodes, deciding actions based on the current policy and updating the policy based on the received reward.
-        
-        Input: 
-        - episodes: Number of episodes to run the learning algorithm.
-        """
-        # Initialize Q-table for each note in the current song
-        for note in self.current_song:
-            self.q_table[note] = {'L': 0, 'R': 0}
-        
         for episode in range(episodes):
-            state, done = self.get_initial_state()
-
-            while not done:
-                # Exploration-exploitation decision
-                if random.uniform(0, 1) < exploration_rate:
+            self.left_mallet, self.right_mallet = self.notes[len(self.notes) // 2 - 1], self.notes[len(self.notes) // 2]
+            previous_note = None
+            for note in self.current_song:
+                if random.random() < epsilon:  # Exploration
                     action = random.choice(['L', 'R'])
-                else:
-                    action = max(self.q_table[state], key=self.q_table[state].get)
+                else:  # Exploitation
+                    action = 'L' if self.q_table[note]['L'] >= self.q_table[note]['R'] else 'R'
+                
+                reward = self.calculate_reward(note, action, previous_note)
+                self.update_q_table(note, action, reward)
+                self.perform_action(note, action)
+                previous_note = note
 
-                new_state, reward, done = self.take_action(state, action)
-                if new_state:
-                    self.q_table[state][action] = self.q_table[state][action] + learning_rate * (reward + discount_rate * max(self.q_table[new_state].values()) - self.q_table[state][action])
-                state = new_state
-
-            # Decay exploration rate
-            exploration_rate = max(min_exploration_rate, exploration_rate * exploration_decay)
-
-    def get_initial_state(self):
+            epsilon = max(min_epsilon, epsilon * epsilon_decay)  # Decrease epsilon as learning progresses
+    def choose_action(self, note):
         """
-        Determine the initial state for an episode of learning. 
-        The initial state is the first note of the current song.
+        Choose the best action (left or right mallet) for the given note based on Q-values, using an epsilon-greedy strategy.
         
-        Output:
-        - The first note of the current song and a flag indicating if the song is empty (done).
-        """
-        if self.current_song:
-            return self.current_song[0], False
-        return None, True
-
-    def take_action(self, state, action):
-        """
-        Simulate taking an action (using a mallet to strike a note) based on the current state.
-        This function updates the state, calculates the reward, and checks if the song is finished.
+        Parameters:
+        - note: The musical note for which the action is to be decided.
         
-        Input: 
-        - state: The current state (note).
-        - action: The action to take ('L' or 'R' mallet).
-        
-        Output:
-        - The new state, the received reward, and a flag indicating if the episode is done.
+        Returns:
+        - action: The chosen action ('L' for left mallet or 'R' for right mallet).
         """
-        if not self.current_song:
-            return None, 0, True
-
-        current_index = self.current_song.index(state)
-        next_index = current_index + 1
-
-        if next_index < len(self.current_song):
-            new_state = self.current_song[next_index]
-            done = False
-        else:
-            new_state = None
-            done = True
-
-        # Simplified reward logic based on action efficiency
-        # Reward for choosing the mallet that is closer to the note
-        left_distance = self.distance_map.get((state, state), float('inf'))
-        right_distance = self.distance_map.get((state, state), float('inf'))
-
+        if random.random() < 0.2:  # 20% chance to explore randomly
+            return random.choice(['L', 'R'])
+        else:  # 80% chance to exploit the best known action
+            return 'L' if self.q_table[note]['L'] > self.q_table[note]['R'] else 'R'
+    
+    def perform_action(self, note, action):
+        """
+        Perform the chosen action by updating the position of the selected mallet to the current note.
+        
+        Parameters:
+        - note: The musical note to be played.
+        - action: The chosen action ('L' for left mallet, 'R' for right mallet).
+        """
         if action == 'L':
-            reward = 1 if left_distance <= right_distance else -1
+            self.left_mallet = note
         else:
-            reward = 1 if right_distance <= left_distance else -1
+            self.right_mallet = note
 
-        return new_state, reward, done
-
-    def set_song(self, song):
+    def calculate_reward(self, note, action, previous_note):
         """
-        Set the current song for the xylophone player. 
-        This function also initializes Q-values for the notes in the new song.
+        Calculate the reward for taking a particular action based on the distance moved. 
+        This includes a bonus for alternating between mallets, which simulates a more human-like playing technique.
         
-        Input: 
-        - song: A list of notes representing the song to be learned/played.
+        Parameters:
+        - note: The current musical note.
+        - action: The chosen action ('L' or 'R').
+        - previous_note: The previous note played (used for determining alternating bonus).
+        
+        Returns:
+        - reward: The calculated reward (negative for movement, positive for staying).
         """
-        self.current_song = song
-        for note in song:
-            if note not in self.q_table:
-                self.q_table[note] = {'L': 0, 'R': 0}
+        movement_cost = 0
+        if action == 'L':
+            movement_cost = abs(self.notes.index(self.left_mallet) - self.notes.index(note))
+            if previous_note and self.right_mallet == previous_note:
+                movement_cost -= 5  # Reward for alternating mallets
+        else:
+            movement_cost = abs(self.notes.index(self.right_mallet) - self.notes.index(note))
+            if previous_note and self.left_mallet == previous_note:
+                movement_cost -= 5  # Reward for alternating mallets
+
+        return -movement_cost  # Negative because we want to minimize movement cost
+
+    def update_q_table(self, note, action, reward):
+        """
+        Update the Q-table based on the action taken, the reward received, and the potential future rewards.
+        
+        Parameters:
+        - note: The musical note for which the action was taken.
+        - action: The action taken ('L' or 'R').
+        - reward: The reward received for taking the action.
+        """
+        learning_rate = 0.1
+        discount_factor = 0.95
+        next_best_reward = max(self.q_table[note].values())
+        self.q_table[note][action] += learning_rate * (reward + discount_factor * next_best_reward - self.q_table[note][action])
 
     def get_optimal_play(self):
         """
-        Determine the optimal sequence of mallet usage for playing the current song,
-        based on the learned Q-values.
+        Retrieve the optimal mallet usage for each note in the current song based on the learned Q-values.
         
-        Output:
-        - optimal_actions: A list of tuples, where each tuple contains the note and the optimal
-          mallet ('L' or 'R') to use for that note, according to the learned policy.
+        Returns:
+        - optimal_play: List of tuples (note, chosen mallet).
         """
-        optimal_actions = []
+        optimal_play = []
         for note in self.current_song:
-            # Determine the best action for this note based on the highest Q-value
-            if note in self.q_table:
-                best_action = max(self.q_table[note], key=self.q_table[note].get)
-                optimal_actions.append((note, best_action))
-            else:
-                # If the note wasn't encountered during learning, default to a heuristic or random choice
-                optimal_actions.append((note, random.choice(['L', 'R'])))
-        
-        return optimal_actions
+            optimal_action = 'L' if self.q_table[note]['L'] >= self.q_table[note]['R'] else 'R'
+            optimal_play.append((note, optimal_action))
+        return optimal_play
