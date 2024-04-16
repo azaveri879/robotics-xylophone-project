@@ -11,6 +11,77 @@ def deg(rads):
 def rads(degs):
 	return degs * (2 * np.pi) / 360
 
+def calculate_a(b, c, A): 
+	# Used to find distance between our gripper carriages
+	# b and c are the length of gripper carriages towards the mallet
+	# A is 120 - the angle between grippers (Calculated below in calculate_angle_A)
+	# Calculates a using the formula a = sqrt(b^2 + c^2 - 2bc*cos(A)).
+
+	A_radians = math.radians(A)  # Convert angle from degrees to radians
+	a_squared = b**2 + c**2 - 2 * b * c * math.cos(A_radians)
+	a = math.sqrt(a_squared)  # Take the square root of a_squared to find a
+	return a
+	
+def calculate_angle_A(a, b, c): 
+	# Used to find angle between mallets given c is the desired length between
+	# a and b are length of mallets
+	# Note the length between should be distance from note1 to note2 - .025
+	# Calculates angle A in degrees using the Law of Cosines.
+		
+	cos_A = (b**2 + c**2 - a**2) / (2 * b * c)
+	A = math.acos(cos_A)
+	return A	
+
+def line_rad_to_x(x):
+
+	m = ((math.pi / 2) + 1) / 0.05
+	b = -1 
+	return m * x + b
+	
+# following functions are finding the x and y of mallets given the origin is the middle
+# of gripper cartridge rail
+def find_y_mallet(l1, l2, a, b): # given the preset l1 and l2. l2 is length of mallet.
+	# l1 is length of carriage base to mallet base
+	# a is angle between mallets
+	# b is 120 degree minus angle a
+	yb = l1 * math.cos(b/2)
+	ya = l2 * math.cos(a/2)
+	return ya + yb
+# left_mallet is whether it is left, false if right mallet
+# lx is desired distance between mallets with the 0.025 offset taken out
+def find_x_mallet(left_mallet, lx):
+	if left_mallet:
+		return -1 * ((lx/2) + (0.025 / 2))
+	else:
+		return (lx/2) + (0.025/2)
+
+def calculate_mallet_cords(lx):
+	# lx is distance between notes - 0.025
+	l1 = 0.029
+	l2 = .17186
+
+	angle_a = calculate_angle_A(l2,l2, lx)
+	angle_b = rads(120) - angle_a
+
+	x = calculate_a(l1,l1,angle_b) # desired length between carriages
+
+	# our limits
+	if x > .05:
+		x = 0.05
+	if x < 0:
+		x = 0
+
+	rad_to_use = line_rad_to_x(x)
+
+	# find x and y of mallet cords
+ 
+	# for right mallet
+ 
+	mx = find_x_mallet(False, lx)
+	my = find_y_mallet(l1,l2,angle_a, angle_b)
+
+	return mx, my, rad_to_use
+
 class XyloBot():
 
 	def __init__(self):
