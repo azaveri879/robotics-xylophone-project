@@ -1,0 +1,7 @@
+# Ignore everything in the apriltag_ws directory
+apriltag_ws/*
+
+# Ignore everything in the Interbotix_ws directory
+interbotix_ws/*
+
+.DS_Store

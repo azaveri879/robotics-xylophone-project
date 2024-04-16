@@ -1,0 +1,5 @@
+{
+  "python.analysis.extraPaths": [
+    "./interbotix_ws/src/interbotix_ros_toolboxes/interbotix_xs_toolbox/interbotix_xs_modules"
+  ]
+}
