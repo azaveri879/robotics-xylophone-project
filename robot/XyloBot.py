@@ -8,6 +8,8 @@ from typing import Any, List, Tuple, Union
 def deg(rads):
 	return rads * 360 / (2 * np.pi)
 
+def rads(degs):
+	return degs * (2 * np.pi) / 360
 
 class XyloBot():
 
