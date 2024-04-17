@@ -40,7 +40,11 @@ class XyloController:
         self.bot.play_song(notes)
         self.bot.go_home()
         self.bot.shutdown()
-
+    
+    def file_to_song(self, audio_path):
+        notes = self.converter.detect_notes(audio_path)
+        self.note_list_to_play(notes)
+    
     def twinkle_twinkle(self):
         self.note_list_to_play(["C1", "C1", "G2", "G2", "A2", "A2", "G2"])
 

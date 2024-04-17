@@ -75,7 +75,8 @@ class XylophonePlayer:
         Setup the initial notes on the xylophone and initialize the mallet positions.
         This function defines the distances between all pairs of notes to facilitate quick lookup during play.
         """
-        front_notes = ['G1', 'G#1', 'A1', 'A#1', 'B1', 'C1', 'C#1', 'D1', 'D#1', 'E1', 'F1', 'G2', 'G#2', 'A2', 'A#2', 'B2', 'C2', 'C#2', 'D2', 'D#2', 'E2', 'F2', 'F#2', 'G3']
+        #front_notes = ['G1', 'G#1', 'A1', 'A#1', 'B1', 'C1', 'C#1', 'D1', 'D#1', 'E1', 'F1', 'G2', 'G#2', 'A2', 'A#2', 'B2', 'C2', 'C#2', 'D2', 'D#2', 'E2', 'F2', 'F#2', 'G3']
+        front_notes = ['G1','A1','B1','C1','D1','E1','F1','G2','A2','B2','C2','D2','E2','F2','G3']
         note_map = {}
         for i in range(len(front_notes)):
             for j in range(len(front_notes)):
@@ -97,20 +98,37 @@ class XylophonePlayer:
         Returns:
         - simplified_notes: List of detected notes, simplified.
         """
-        y, sr = librosa.load(audio_path)
-        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
+        y, sr = librosa.load(audio_path)  # Load the audio file
+        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)  # Perform pitch tracking
         pitch_times = np.argmax(magnitudes, axis=0)
         pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]
 
-        threshold = np.median(magnitudes) * 1.5  # Increase threshold to filter out more noise
+        # Define threshold to filter out the less significant pitches
+        threshold = np.median(magnitudes) * 1.5
         pitch_freqs_filtered = [freq for i, freq in enumerate(pitch_freqs) if magnitudes[pitch_times[i], i] > threshold and freq > 0]
-            
+
+        # Convert frequencies to musical notes
         notes = [freq_to_note(freq) for freq in pitch_freqs_filtered]
-        simplified_notes = [notes[0]]
-        for note in notes[1:]:
+
+        # Remove any sharps or flats from the notes
+        normalized_notes = [note[0] + note[2] if '#' in note or 'b' in note else note for note in notes]
+
+        # Simplify the note sequence by collapsing consecutive identical notes
+        simplified_notes = [normalized_notes[0]] if normalized_notes else []
+        for note in normalized_notes[1:]:
             if note != simplified_notes[-1]:
                 simplified_notes.append(note)
-            
+
+        # Adjust notes that are outside the playable range
+        for i in range(len(simplified_notes)):
+            note_base = simplified_notes[i][0]
+            octave = int(simplified_notes[i][1])
+
+            if octave > 3:
+                simplified_notes[i] = note_base + '3' if note_base == 'G' else note_base + '2'
+            elif octave < 1:
+                simplified_notes[i] = note_base + '1'
+
         return simplified_notes
 
     def set_song(self, song):
