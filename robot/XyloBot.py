@@ -5,37 +5,45 @@ from interbotix_xs_modules.xs_robot.arm import InterbotixManipulatorXS
 import numpy as np
 from typing import Any, List, Tuple, Union
 
+def main():
+	#testing
+	lx = 0.00001
+	calculate_mallet_cords(lx)
+	print("")
+	pass
 def deg(rads):
 	return rads * 360 / (2 * np.pi)
 
 def rads(degs):
 	return degs * (2 * np.pi) / 360
 
-def calculate_a(b, c, A): 
+def law_of_cosines(b, c, A_radians): 
 	# Used to find distance between our gripper carriages
 	# b and c are the length of gripper carriages towards the mallet
 	# A is 120 - the angle between grippers (Calculated below in calculate_angle_A)
 	# Calculates a using the formula a = sqrt(b^2 + c^2 - 2bc*cos(A)).
 
-	A_radians = math.radians(A)  # Convert angle from degrees to radians
-	a_squared = b**2 + c**2 - 2 * b * c * math.cos(A_radians)
+	a_squared = (b**2 + c**2) - 2 * b * c * math.cos(A_radians)
 	a = math.sqrt(a_squared)  # Take the square root of a_squared to find a
+	print("x: ", a)
 	return a
 	
-def calculate_angle_A(a, b, c): 
+def law_of_cosines_angle(a, b, c): 
 	# Used to find angle between mallets given c is the desired length between
 	# a and b are length of mallets
 	# Note the length between should be distance from note1 to note2 - .025
 	# Calculates angle A in degrees using the Law of Cosines.
 		
-	cos_A = (b**2 + c**2 - a**2) / (2 * b * c)
+	cos_A = (b**2 + a**2 - c**2) / (2 * b * a)
 	A = math.acos(cos_A)
+	print("Angle a: ", deg(A))
 	return A	
 
 def line_rad_to_x(x):
 
 	m = ((math.pi / 2) + 1) / 0.05
 	b = -1 
+	print("rad: ", m*x + b)
 	return m * x + b
 	
 # following functions are finding the x and y of mallets given the origin is the middle
@@ -60,10 +68,10 @@ def calculate_mallet_cords(lx):
 	l1 = 0.029
 	l2 = .17186
 
-	angle_a = calculate_angle_A(l2,l2, lx)
+	angle_a = law_of_cosines_angle(l2,l2, lx)
 	angle_b = rads(120) - angle_a
 
-	x = calculate_a(l1,l1,angle_b) # desired length between carriages
+	x = law_of_cosines(l1,l1,angle_b) # desired length between carriages
 
 	# our limits
 	if x > .05:
@@ -79,6 +87,9 @@ def calculate_mallet_cords(lx):
  
 	mx = find_x_mallet(False, lx)
 	my = find_y_mallet(l1,l2,angle_a, angle_b)
+
+	print("Y cord: ", my)
+	print("X coord:, ", mx)
 
 	return mx, my, rad_to_use
 
@@ -217,3 +228,6 @@ class XyloBot():
 
 	def shutdown(self):
 		self.bot.shutdown()
+
+	if __name__ == '__main__':
+		main()
