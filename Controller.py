@@ -19,7 +19,7 @@ class XyloController:
 
             for decision in decisions:
                 note, action, left_pos, right_pos = decision
-                notes.append((note, left_pos, right_pos, action))
+                notes.append((left_pos, right_pos, action == "L"))
 
         else:
             for n, n1, n2, mallet in decision:

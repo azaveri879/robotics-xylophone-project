@@ -141,12 +141,25 @@ class XylophonePlayer:
             return []
 
         # Initialize mallet positions to the first note (or first two different notes if available)
-        left_mallet = right_mallet = notes[0]
-        i = 0
-        while notes[0] == notes[i] and i < len(notes) - 1:
-            i += 1
-        if len(notes) > 1:
-            right_mallet = notes[i]
+        # left_mallet = right_mallet = notes[0]
+        # i = 0
+        # while notes[0] == notes[i] and i < len(notes) - 1:
+        #     i += 1
+        # if len(notes) > 1:
+        #     right_mallet = notes[i]
+        front_notes = np.array(["G1", "G#1", "A1", "A#1", "B1", "C1", "C#1", "D1", "D#1", "E1", "F1", "G2", "G#2", "A2", "A#2", "B2", "C2", "C#2", "D2", "D#2", "E2", "F2", "F#2", "G3"])
+        min_index = len(front_notes)
+        max_index = 0
+        for note in notes:
+            indices = np.where(front_notes == note)[0]
+            print(indices)
+            if len(indices) > 0:
+                if indices[0] < min_index:
+                    min_index = indices[0]
+                if indices[-1] > max_index:
+                    max_index = indices[-1]
+        left_mallet = front_notes[min_index]
+        right_mallet = front_notes[max_index]
 
         decisions = []
         for note in notes:

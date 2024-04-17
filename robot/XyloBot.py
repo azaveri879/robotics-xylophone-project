@@ -219,6 +219,7 @@ class XyloBot():
 			self.hit()
 			
 	def get_distance(self, n1, n2):
+		print(n1, n2)
 		print("Calculated distance", np.abs(self.m[n1][0] - self.m[n2][0]))
 		return np.abs(self.m[n1][0] - self.m[n2][0])
 			
