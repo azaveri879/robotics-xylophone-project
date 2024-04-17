@@ -2,6 +2,9 @@ import random
 import librosa
 # from utils import freq_to_note
 import numpy as np
+import sounddevice as sd
+from scipy.io.wavfile import write
+import wavio as wv
 
 def freq_to_note(freq):
     """Map a frequency to a musical note."""
@@ -20,13 +23,53 @@ class XylophonePlayer:
         Initialize the Xylophone Player class with default settings for note lists,
         mallet positions, the Q-table for learning, and the current song.
         """
+        self.distance_map = {}
         self.notes = []  # List to store the xylophone notes
         self.right_mallet = None  # Current position of the right mallet
         self.left_mallet = None  # Current position of the left mallet
         self.setup_notes()  # Setup the notes and their distances
         self.q_table = {}  # Q-table for learning the optimal actions
         self.current_song = []  # Current song (sequence of notes) to be played
+        self.freq = 44100  # Sample rate
+        self.duration = 5  # Duration of recording in seconds
 
+
+    def record_song(self):
+        """
+        Record a song from the microphone and analyze it directly to get notes.
+        """
+        # Record audio from the microphone
+        audio = sd.rec(int(self.freq * self.duration), samplerate=self.freq, channels=1, dtype='float32')
+        sd.wait()  # Wait until recording is finished
+
+        # Normalize audio and ensure it is in floating-point format suitable for librosa
+        audio = audio.flatten()  # Flatten the array to 1D
+        audio = audio / np.max(np.abs(audio))  # Normalize audio to -1.0 to 1.0
+
+        # Directly convert the recorded audio array to notes
+        notes = self.detect_notes_from_array(audio, self.freq)
+        return notes
+
+    def detect_notes_from_array(self, audio, sr):
+        """
+        Detect musical notes from an audio array using pitch tracking.
+        """
+        pitches, magnitudes = librosa.piptrack(y=audio, sr=sr)
+        pitch_times = np.argmax(magnitudes, axis=0)
+        pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]
+
+        threshold = np.median(magnitudes) * 1.5  # Threshold to consider a pitch significant
+        pitch_freqs_filtered = [freq for i, freq in enumerate(pitch_freqs) if magnitudes[pitch_times[i], i] > threshold and freq > 0]
+
+        notes = [freq_to_note(freq) for freq in pitch_freqs_filtered]
+        simplified_notes = [notes[0]] if notes else []
+        for note in notes[1:]:
+            if note != simplified_notes[-1]:
+                simplified_notes.append(note)
+
+        return simplified_notes
+
+        
     def setup_notes(self):
         """
         Setup the initial notes on the xylophone and initialize the mallet positions.
@@ -54,21 +97,20 @@ class XylophonePlayer:
         Returns:
         - simplified_notes: List of detected notes, simplified.
         """
-        y, sr = librosa.load(audio_path)  # Load the audio file as a waveform `y` with a sampling rate `sr`
-        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)  # Extract pitches and their magnitudes
-        pitch_times = np.argmax(magnitudes, axis=0)  # Time indices of the prominent pitches
-        pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]  # Frequencies of prominent pitches
+        y, sr = librosa.load(audio_path)
+        pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
+        pitch_times = np.argmax(magnitudes, axis=0)
+        pitch_freqs = [pitches[pitch_times[i], i] for i in range(pitches.shape[1])]
 
-        # Filter out frequencies below a threshold magnitude
-        pitch_freqs_filtered = [freq if magnitudes[pitch_times[i], i] > np.median(magnitudes) else 0 for i, freq in enumerate(pitch_freqs)]
-        notes = [freq_to_note(freq) for freq in pitch_freqs_filtered if freq > 0]  # Convert frequencies to note names
-
-        # Simplify the list of notes by collapsing consecutive duplicates
+        threshold = np.median(magnitudes) * 1.5  # Increase threshold to filter out more noise
+        pitch_freqs_filtered = [freq for i, freq in enumerate(pitch_freqs) if magnitudes[pitch_times[i], i] > threshold and freq > 0]
+            
+        notes = [freq_to_note(freq) for freq in pitch_freqs_filtered]
         simplified_notes = [notes[0]]
         for note in notes[1:]:
             if note != simplified_notes[-1]:
                 simplified_notes.append(note)
-        
+            
         return simplified_notes
 
     def set_song(self, song):
@@ -217,14 +259,84 @@ class XylophonePlayer:
         self.q_table[note][action] += learning_rate * (reward + discount_factor * next_best_reward - self.q_table[note][action])
 
     def get_optimal_play(self):
+        optimal_play = []
+        left_mallet, right_mallet = self.notes[len(self.notes) // 2 - 1], self.notes[len(self.notes) // 2]
+        
+        for i in range(len(self.current_song)):
+            current_note = self.current_song[i]
+            chosen_mallet = 'L' if self.q_table[current_note]['L'] >= self.q_table[current_note]['R'] else 'R'
+            
+            if chosen_mallet == 'L':
+                left_mallet = current_note
+            else:
+                right_mallet = current_note
+            
+            # Adjust the non-active mallet's position
+            non_active_mallet = 'R' if chosen_mallet == 'L' else 'L'
+            non_active_mallet_position = right_mallet if non_active_mallet == 'R' else left_mallet
+            active_mallet_position = left_mallet if chosen_mallet == 'L' else right_mallet
+            
+            if i + 1 < len(self.current_song):
+                lookahead_notes = self.current_song[i + 1:i + 4]
+                best_position = self.proactive_mallet_positioning(active_mallet_position, non_active_mallet_position, lookahead_notes, non_active_mallet)
+                
+                if non_active_mallet == 'R':
+                    right_mallet = best_position
+                else:
+                    left_mallet = best_position
+            
+            # Ensure mallets are not on the same note
+            if left_mallet == right_mallet:
+                if non_active_mallet == 'R':
+                    right_mallet = self.adjust_mallet_position(left_mallet, right_mallet)
+                else:
+                    left_mallet = self.adjust_mallet_position(right_mallet, left_mallet)
+            
+            optimal_play.append((current_note, chosen_mallet, left_mallet, right_mallet))
+        
+        return optimal_play
+
+    def adjust_mallet_position(self, active_mallet, non_active_mallet):
+        active_index = self.notes.index(active_mallet)
+        non_active_index = self.notes.index(non_active_mallet)
+        
+        # Check if adjustment is possible within the 8-note range
+        if non_active_index > 0 and abs((non_active_index - 1) - active_index) <= 8:
+            return self.notes[non_active_index - 1]
+        elif non_active_index < len(self.notes) - 1 and abs((non_active_index + 1) - active_index) <= 8:
+            return self.notes[non_active_index + 1]
+        return non_active_mallet  # Return the original if no adjustment is feasible within constraints
+
+    def proactive_mallet_positioning(self, active_mallet_position, non_active_mallet_position, future_notes, non_active_mallet):
         """
-        Retrieve the optimal mallet usage for each note in the current song based on the learned Q-values.
+        Determine the best position for the non-active mallet given the upcoming notes, while ensuring the mallets
+        do not exceed a separation of 8 notes.
+        
+        Parameters:
+        - active_mallet_position: The current position of the active mallet.
+        - non_active_mallet_position: The current position of the mallet being optimized.
+        - future_notes: A list of future notes to plan for.
+        - non_active_mallet: The mallet ('L' or 'R') that is currently non-active.
         
         Returns:
-        - optimal_play: List of tuples (note, chosen mallet).
+        - best_position: The optimal future position of the mallet, adhering to physical constraints.
         """
-        optimal_play = []
-        for note in self.current_song:
-            optimal_action = 'L' if self.q_table[note]['L'] >= self.q_table[note]['R'] else 'R'
-            optimal_play.append((note, optimal_action))
-        return optimal_play
+        active_index = self.notes.index(active_mallet_position)
+        non_active_index = self.notes.index(non_active_mallet_position)
+        min_index = max(1, active_index - 8)
+        max_index = min(len(self.notes) - 1, active_index + 8)
+
+        possible_positions = self.notes[min_index:max_index + 1]
+        distance_costs = {note: 0 for note in possible_positions}
+        for note in possible_positions:
+            distance_costs[note] = sum(self.distance_map.get((note, future_note), float('inf')) for future_note in future_notes)
+
+        best_position = min(distance_costs, key=distance_costs.get)
+
+        # Adjust if best position is out of the 8-note range
+        best_position_index = self.notes.index(best_position)
+        if abs(best_position_index - active_index) > 8:
+            best_position = self.notes[active_index + 8 if best_position_index > active_index else active_index - 8]
+
+        return best_position
+
