@@ -34,10 +34,10 @@ def law_of_cosines_angle(a, b, c):
 	# Note the length between should be distance from note1 to note2 - .025
 	# Calculates angle A in degrees using the Law of Cosines.
 		
-	cos_A = (b**2 + a**2 - c**2) / (2 * b * a)
-	A = math.acos(cos_A)
-	print("Angle a: ", deg(A))
-	return A	
+	cos_C = (b**2 + a**2 - c**2) / (2 * b * a)
+	C = math.acos(cos_C)
+	print("Angle a: ", deg(C))
+	return C
 
 def line_rad_to_x(x):
 
@@ -59,12 +59,12 @@ def find_y_mallet(l1, l2, a, b): # given the preset l1 and l2. l2 is length of m
 # lx is desired distance between mallets with the 0.025 offset taken out
 def find_x_mallet(left_mallet, lx):
 	if left_mallet:
-		return -1 * ((lx/2) + (0.025 / 2))
+		return -1 * ((lx/2))
 	else:
-		return (lx/2) + (0.025/2)
-
+		return (lx/2)
+	
 def calculate_mallet_cords(lx):
-	# lx is distance between notes - 0.025
+	lx -= 0.025
 	l1 = 0.029
 	l2 = .17186
 
@@ -72,18 +72,21 @@ def calculate_mallet_cords(lx):
 	angle_b = rads(120) - angle_a
 
 	x = law_of_cosines(l1,l1,angle_b) # desired length between carriages
+	x += 0.025
 
 	# our limits
-	if x > .05:
-		x = 0.05
-	if x < 0:
-		x = 0
+	if x > .075:
+		x = 0.075
+	if x < 0.025:
+		x = 0.025
 
 	rad_to_use = line_rad_to_x(x)
 
 	# find x and y of mallet cords
  
 	# for right mallet
+ 
+	lx += 0.025
  
 	mx = find_x_mallet(False, lx)
 	my = find_y_mallet(l1,l2,angle_a, angle_b)
