@@ -8,12 +8,17 @@ import numpy as np
     - Musical note
 """
 def freq_to_note(freq):
-    """Map a frequency to a musical note."""
+    """
+    Convert frequency to musical note.
+    """
+    if freq <= 0:
+        return "No Note"
+    NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     A4 = 440
-    C0 = A4*np.power(2, -4.75)
-    if freq == 0: return None  # Silence or unvoiced
-    h = round(12*np.log2(freq/C0))
+    C0 = A4 * pow(2, -4.75)
+    h = round(12 * np.log2(freq / C0))
     octave = h // 12
-    n = h % 12
-    note = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'][n] + str(octave)
-    return note
+    index = h % 12
+    if index < 0 or index >= len(NOTES):
+        return "Invalid Note"
+    return NOTES[index] + str(octave)
