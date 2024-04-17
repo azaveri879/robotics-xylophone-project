@@ -7,7 +7,7 @@ from typing import Any, List, Tuple, Union
 
 def main():
 	#testing
-	lx = 0.00001
+	lx = 0.025 + 0.000001
 	calculate_mallet_cords(lx)
 	print("")
 	pass
@@ -64,6 +64,9 @@ def find_x_mallet(left_mallet, lx):
 		return (lx/2)
 	
 def calculate_mallet_cords(lx):
+	if lx > .29:
+		lx = .29
+		print("Limited lx to .29")
 	lx -= 0.025
 	l1 = 0.029
 	l2 = .17186
