@@ -105,7 +105,7 @@ class XyloBot():
 			
 		notes = ["C2", "D2", "E2", "F2", "G3"]
 		for i, note in enumerate(notes):
-			self.m[note] = (0.105 + 0.03*i, 0.44)
+			self.m[note] = (0.105 + 0.028*i, 0.44)
 			
 		self.left_mallet = (-0.068, 0.2)
 		self.right_mallet = (0.068, 0.2)
@@ -219,9 +219,7 @@ class XyloBot():
 			self.hit()
 			
 	def get_distance(self, n1, n2):
-		print(n1, n2)
-		print("Calculated distance", np.abs(self.m[n1][0] - self.m[n2][0]))
-		return np.abs(self.m[n1][0] - self.m[n2][0])
+		return min(0.155, np.abs(self.m[n1][0] - self.m[n2][0]))
 			
 	def set_gripper_angle(self, angle):
 		self.bot.core.robot_set_operating_modes(cmd_type='single', name='gripper', mode='position')

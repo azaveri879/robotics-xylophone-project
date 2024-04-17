@@ -2,7 +2,7 @@ import random
 import librosa
 # from utils import freq_to_note
 import numpy as np
-import sounddevice as sd
+# import sounddevice as sd
 from scipy.io.wavfile import write
 import wavio as wv
 
@@ -137,7 +137,7 @@ class XylophonePlayer:
         Returns:
         - decisions: List of tuples (note, left mallet position, right mallet position, chosen mallet).
         """
-        if not notes:
+        if len(notes) == 0:
             return []
 
         # Initialize mallet positions to the first note (or first two different notes if available)

@@ -3,7 +3,7 @@ import numpy as np
 
 def main():
 	xylo = XyloController()
-	xylo.twinkle_twinkle()
+	xylo.random_song()
 
 if __name__ == '__main__':
 	main()
