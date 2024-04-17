@@ -1,7 +1,18 @@
 import random
 import librosa
-from utils import freq_to_note
+# from utils import freq_to_note
 import numpy as np
+
+def freq_to_note(freq):
+    """Map a frequency to a musical note."""
+    A4 = 440
+    C0 = A4*np.power(2, -4.75)
+    if freq == 0: return None  # Silence or unvoiced
+    h = round(12*np.log2(freq/C0))
+    octave = h // 12
+    n = h % 12
+    note = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'][n] + str(octave)
+    return note
 
 class XylophonePlayer:
     def __init__(self):
@@ -89,8 +100,11 @@ class XylophonePlayer:
 
         # Initialize mallet positions to the first note (or first two different notes if available)
         left_mallet = right_mallet = notes[0]
-        if len(notes) > 1 and notes[0] != notes[1]:
-            right_mallet = notes[1]
+        i = 0
+        while notes[0] == notes[i] and i < len(notes) - 1:
+            i += 1
+        if len(notes) > 1:
+            right_mallet = notes[i]
 
         decisions = []
         for note in notes:

@@ -17,6 +17,10 @@ def deg(rads):
 def rads(degs):
 	return degs * (2 * np.pi) / 360
 
+def data():
+	d = np.array([[1.5707963267948966, 0.041, 0.076], [1.3137166941154068, 0.046, 0.073], [1.056637061435917, 0.091, 0.068], [0.7995574287564274, 0.137, 0.063], [0.5424777960769378, 0.18, 0.058], [0.28539816339744817, 0.23, 0.05], [0.028318530717958534, 0.26, 0.043], [-0.2287611019615311, 0.029, 0.034], [-0.48584073464102073, 0.31, 0.031], [-0.7429203673205104, 0.32, 0.027], [-1.0, 0.33, 0.025]])
+	return d[:, 0], d[:, 1], d[:, 2]
+
 def law_of_cosines(b, c, A_radians): 
 	# Used to find distance between our gripper carriages
 	# b and c are the length of gripper carriages towards the mallet
@@ -57,38 +61,21 @@ def find_y_mallet(l1, l2, a, b): # given the preset l1 and l2. l2 is length of m
 	return ya + yb
 # left_mallet is whether it is left, false if right mallet
 # lx is desired distance between mallets with the 0.025 offset taken out
-def find_x_mallet(left_mallet, lx):
-	if left_mallet:
-		return -1 * ((lx/2))
-	else:
-		return (lx/2)
+def find_x_mallet(lx):
+	return (lx/2)
 	
 def calculate_mallet_cords(lx):
-	lx -= 0.025
 	l1 = 0.029
 	l2 = .17186
+	gap = 0.05
+	
+	angles, m_distances, _ = data()
+	rad_to_use = np.interp(lx, m_distances, angles)
 
-	angle_a = law_of_cosines_angle(l2,l2, lx)
+	angle_a = law_of_cosines_angle(l2,l2, lx - gap)
 	angle_b = rads(120) - angle_a
-
-	x = law_of_cosines(l1,l1,angle_b) # desired length between carriages
-	x += 0.025
-
-	# our limits
-	if x > .075:
-		x = 0.075
-	if x < 0.025:
-		x = 0.025
-
-	rad_to_use = line_rad_to_x(x)
-
-	# find x and y of mallet cords
  
-	# for right mallet
- 
-	lx += 0.025
- 
-	mx = find_x_mallet(False, lx)
+	mx = find_x_mallet(lx)
 	my = find_y_mallet(l1,l2,angle_a, angle_b)
 
 	print("Y cord: ", my)
@@ -110,15 +97,15 @@ class XyloBot():
 		
 		notes = ["G1", "A1", "B1", "C1", "D1"]
 		for i, note in enumerate(notes):
-			self.m[note] = (-0.17 + 0.03*i, 0.45)
+			self.m[note] = (-0.17 + 0.03*i, 0.44)
 			
 		notes = ["E1", "F1", "G2", "A2", "B2"]
 		for i, note in enumerate(notes):
-			self.m[note] = (-0.031 + 0.03*i, 0.45)
+			self.m[note] = (-0.031 + 0.03*i, 0.44)
 			
 		notes = ["C2", "D2", "E2", "F2", "G3"]
 		for i, note in enumerate(notes):
-			self.m[note] = (0.105 + 0.03*i, 0.45)
+			self.m[note] = (0.105 + 0.03*i, 0.44)
 			
 		self.left_mallet = (-0.068, 0.2)
 		self.right_mallet = (0.068, 0.2)
@@ -166,6 +153,7 @@ class XyloBot():
         # Find arm length and final ee position
 		arm_length = math.sqrt(mallet_length**2 + note_length**2 - 2*mallet_length*note_length*math.cos(np.abs(last_triangle_angle)))
 		# print("arm_length", arm_length)
+
 		return (math.sin(arm_angle)*arm_length, math.cos(arm_angle)*arm_length)
 	
 	def go_to(self,
@@ -182,52 +170,72 @@ class XyloBot():
 		
 		rotation = self.get_wrist_rotation()
 		thetas[4] = -rotation if self.left else rotation
+		print(thetas)
 		
-		return self.bot.arm.set_joint_positions(thetas, moving_time=1.0)
+		return self.bot.arm.set_joint_positions(thetas, moving_time=0.7)
 	
 	def get_wrist_rotation(self):
-		goal_height_difference = 0.025
+		goal_height_difference = 0.01
 		radius = self.mallet_distance / 2
 		return math.atan(goal_height_difference/radius)
 	
-	def find_mallet_location(self):
-		mallet = self.left_mallet if self.left else self.right_mallet
+	def find_and_set_mallet_location(self, execute=True):
+		mx, my, rads = calculate_mallet_cords(self.mallet_distance)
+		
+		if execute:
+			self.set_gripper_angle(rads)
+		
+        # Adjust for wrist rotation
 		rotation = self.get_wrist_rotation()
-		print(rotation)
-		print(self.mallet_distance)
-		x_pos = (self.mallet_distance/2)*math.cos(rotation)
-		print(x_pos)
+		x_pos = (mx)*math.cos(rotation)
+		
 		if self.left:
-			return (-x_pos, mallet[1])
+			return (-x_pos, my)
 		else:
-			return (x_pos, mallet[1])
+			return (x_pos, my)
         
 
 	def hit(self):
-		self.bot.arm.set_single_joint_position("wrist_angle", self.last_wrist_pos + 0.25, moving_time=1.0)
-		self.bot.arm.set_single_joint_position("wrist_angle", self.last_wrist_pos, moving_time=1.0)
+		self.bot.arm.set_single_joint_position("wrist_angle", self.last_wrist_pos + 0.27, moving_time=0.7)
+		self.bot.arm.set_single_joint_position("wrist_angle", self.last_wrist_pos, moving_time=0.7)
 	
 	def wait(self, secs):
 		time.sleep(secs)
 		
 	def play_song(self, notes):
-		for n, left in notes:
+		for n1, n2, left in notes:
 			self.left = left
-			self.mallet_distance = 0.136
-			mallet_location = self.find_mallet_location()
-			ee_loc = self.find_ee_loc(self.m[n], mallet_location)
+			note = n1 if left else n2
+			
+            # Check if mallet distance changed
+			mallet_distance = self.get_distance(n1, n2)
+			execute = mallet_distance != self.mallet_distance
+			self.mallet_distance = mallet_distance
+			
+			mallet_location = self.find_and_set_mallet_location(execute=execute)
+			
+			ee_loc = self.find_ee_loc(self.m[note], mallet_location)
 			self.go_to(x=ee_loc[0], y=ee_loc[1], z=0.15)
 			self.hit()
 			
-	def gripper_to_distance(self, angle):
+	def get_distance(self, n1, n2):
+		print("Calculated distance", np.abs(self.m[n1][0] - self.m[n2][0]))
+		return np.abs(self.m[n1][0] - self.m[n2][0])
+			
+	def set_gripper_angle(self, angle):
 		self.bot.core.robot_set_operating_modes(cmd_type='single', name='gripper', mode='position')
-		self.wait(0.5)
+		self.wait(0.2)
+		self.bot.core.robot_write_joint_command(joint_name="gripper", command=np.pi/2)
+		self.wait(0.4)
 		self.bot.core.robot_write_joint_command(joint_name="gripper", command=angle)
-		self.wait(0.5)
+		self.wait(0.4)
 		self.bot.core.robot_set_operating_modes(cmd_type='single', name='gripper', mode='pwm')
 
 	def go_home(self):
-		self.bot.arm.set_joint_positions([rads(90), rads(-105), 1.55, rads(20), 0.0], moving_time=1.0)
+		self.bot.arm.set_joint_positions([rads(90), rads(-105), 1.55, rads(20), 0.0], moving_time=0.7)
+		
+	def ready(self):
+		self.bot.arm.set_joint_positions([ 1.63049627, -0.33121526,  1.18114171, -1.5, -0.1814677 ], moving_time=0.7)
 
 	def shutdown(self):
 		self.bot.shutdown()
