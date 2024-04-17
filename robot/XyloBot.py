@@ -7,7 +7,7 @@ from typing import Any, List, Tuple, Union
 
 def main():
 	#testing
-	lx = 0.00001
+	lx = 0.025 + 0.000001
 	calculate_mallet_cords(lx)
 	print("")
 	pass
