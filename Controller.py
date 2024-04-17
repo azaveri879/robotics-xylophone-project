@@ -11,10 +11,20 @@ class XyloController:
 
     def note_list_to_play(self, note_list, use_learning = False):
         decision = self.converter.mallet_decision(note_list)
-
         notes = []
-        for n, n1, n2, mallet in decision:
-            notes.append((n1, n2, mallet == "L"))
+        if use_learning:
+            self.converter.set_song(note_list)
+            self.converter.learn_to_play(episodes=1000)
+            decisions = self.converter.get_optimal_play()
+
+            for decision in decisions:
+                note, action, left_pos, right_pos = decision
+                notes.append((note, left_pos, right_pos, action))
+
+        else:
+            for n, n1, n2, mallet in decision:
+                notes.append((n1, n2, mallet == "L"))
+
 
         self.bot.ready()
         self.bot.wait(3)
